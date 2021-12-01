@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class IconContent extends StatelessWidget {
-  IconContent({icon, required this.label});
+  IconContent({required this.icon, required this.label});
 
-  IconData? icon;
+  IconData icon;
 
   String label;
 
@@ -16,6 +16,7 @@ class IconContent extends StatelessWidget {
         Icon(
           icon,
           size: 80.0,
+          color: Colors.white,
         ),
         SizedBox(
           height: 13.0,

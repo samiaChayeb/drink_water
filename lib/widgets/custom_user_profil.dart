@@ -30,7 +30,7 @@ class CustomUserProfil extends StatelessWidget {
   Widget buildImage() {
     return ClipOval(
       child: Material(
-        color: Colors.transparent,
+        color: Colors.white,
         child: Ink.image(
           image: AssetImage('assets/welcome.jpg'),
           fit: BoxFit.cover,
