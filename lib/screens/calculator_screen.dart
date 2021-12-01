@@ -5,25 +5,20 @@ import '../utils/constants.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class InputPage extends StatefulWidget {
+class CalculatorScreen extends StatefulWidget {
   @override
-  _InputPageState createState() => _InputPageState();
+  _CalculatorScreenState createState() => _CalculatorScreenState();
 }
 
-class _InputPageState extends State<InputPage> {
+class _CalculatorScreenState extends State<CalculatorScreen> {
   Gender? selectedGender;
   int height = 180;
-
   int weight = 40;
-
   int age = 15;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Center(child: Text('BMI CALCULATOR')),
-        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[

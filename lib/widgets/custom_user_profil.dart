@@ -2,12 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class CustomUserProfil extends StatelessWidget {
-  final String imagePath;
   final VoidCallback onClicked;
 
   const CustomUserProfil({
     key,
-    required this.imagePath,
     required this.onClicked,
   }) : super(key: key);
 
@@ -30,13 +28,11 @@ class CustomUserProfil extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
-
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: image,
+          image: AssetImage('assets/welcome.jpg'),
           fit: BoxFit.cover,
           width: 128,
           height: 128,
