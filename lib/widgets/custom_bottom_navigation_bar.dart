@@ -76,7 +76,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                   ),
                   Container(),
                   Text(
-                    'Sounds',
+                    'Calculator',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                         color: Colors.white

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../utils/Icon_content.dart';
 import '../utils/Reusable_card.dart';
@@ -15,18 +17,20 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   int height = 180;
   int weight = 40;
   int age = 15;
+  String resultat = '0.00';
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: ConstrainedBox(
             constraints:
-                BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+                BoxConstraints(minHeight: MediaQuery.of(context).size.height),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
+                const SizedBox(height: 50),
+                SizedBox(
                     child: Row(
                   children: <Widget>[
                     Expanded(
@@ -63,7 +67,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     ),
                   ],
                 )),
-                Expanded(
+                SizedBox(
                     child: Row(children: <Widget>[
                   Expanded(
                       child: ReusableCard(
@@ -97,14 +101,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           ),
                           child: Slider(
                             value: height.toDouble(),
-                            min: 120.0,
+                            min: 50.0,
                             max: 220.0,
-                            activeColor: Color(0xffEB1555),
+                            activeColor: Colors.lightBlue,
                             inactiveColor: Color(0xff8D8E98),
                             onChanged: (double newValue) {
                               setState(() {
                                 height = newValue.round();
                                 print(height);
+                                waterNeeds();
                               });
                             },
                           ),
@@ -113,7 +118,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     ),
                   )),
                 ])),
-                Expanded(
+                SizedBox(
                     child: Row(children: <Widget>[
                   Expanded(
                       child: ReusableCard(
@@ -137,6 +142,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               onPressed: () {
                                 setState(() {
                                   weight++;
+                                  waterNeeds();
                                 });
                               },
                             ),
@@ -148,6 +154,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               onPressed: () {
                                 setState(() {
                                   weight--;
+                                  waterNeeds();
                                 });
                               },
                             ),
@@ -178,6 +185,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               onPressed: () {
                                 setState(() {
                                   age++;
+                                  waterNeeds();
                                 });
                               },
                             ),
@@ -188,7 +196,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               icon: FontAwesomeIcons.minus,
                               onPressed: () {
                                 setState(() {
-                                  age--;
+                                  age > 0 ? age-- : 0;
+                                  waterNeeds();
                                 });
                               },
                             ),
@@ -198,9 +207,38 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     ),
                   )),
                 ])),
-                const SizedBox(height: 24),
+                SizedBox(
+                    child: ReusableCard(
+                        colour: kActiveCardColor,
+                        cardChild: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                this.resultat + " Litres",
+                                style: kNumberTextStyle,
+                              )
+                            ])))
               ],
             )));
+  }
+
+  waterNeeds() {
+    var female;
+    if (this.selectedGender == Gender.Female)
+      female = 1;
+    else
+      female = 0;
+    this.resultat = (((this.age <= 3)
+                ? (0.777 * (pow(this.weight, 0.83)))
+                : ((this.age > 3 || this.age <= 13)
+                    ? (0.0746 *
+                        pow(0.95, female) *
+                        (pow((this.height * this.weight), 0.65)))
+                    : (0.0658 *
+                       pow(0.84 ,female)*
+                        (pow((this.height * this.weight), 0.69))))) /
+            10)
+        .toStringAsFixed(2);
   }
 }
 
@@ -213,7 +251,7 @@ class RoundIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      child: Icon(icon),
+      child: Icon(icon, color: Colors.lightBlue),
       onPressed: onPressed,
       elevation: 6.0,
       constraints: BoxConstraints.tightFor(
@@ -221,7 +259,7 @@ class RoundIconButton extends StatelessWidget {
         height: 50.0,
       ),
       shape: CircleBorder(),
-      fillColor: Color(0xff4c4f5E),
+      fillColor: Colors.white,
     );
   }
 }
