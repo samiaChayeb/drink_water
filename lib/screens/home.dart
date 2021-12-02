@@ -11,7 +11,6 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: PageView(
-          physics: NeverScrollableScrollPhysics(),
           controller: pageController,
           children: <Widget>[
             ProfilScreen(),
