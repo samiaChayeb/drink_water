@@ -8,9 +8,9 @@ class CustomSplashScreen extends StatelessWidget {
     return SplashScreen(
         seconds: 10,
         title: new Text("let's drink",
-            style: TextStyle(color: Colors.lightBlueAccent,fontSize: 25)),
+            style: TextStyle(color: Colors.lightBlueAccent, fontSize: 25)),
         image: new Image.asset('assets/welcome.jpg'),
         photoSize: 200.0,
-        navigateAfterSeconds: Home());
+        navigateAfterSeconds: HomeScreen());
   }
 }

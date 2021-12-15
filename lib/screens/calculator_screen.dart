@@ -1,11 +1,11 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import '../utils/Icon_content.dart';
 import '../utils/Reusable_card.dart';
 import '../utils/constants.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../utils/globals.dart' as globals;
 
 class CalculatorScreen extends StatefulWidget {
   @override
@@ -13,11 +13,11 @@ class CalculatorScreen extends StatefulWidget {
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
+  double doubleResult = globals.waterLevelNeeds;
   Gender? selectedGender = Gender.Male;
   int height = 180;
   int weight = 40;
   int age = 15;
-  String resultat = '0.00';
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     cardChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'HEIGHT',
                           style: kLabelTextStyle,
                         ),
@@ -85,7 +85,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           textBaseline: TextBaseline.alphabetic,
                           children: <Widget>[
                             Text(height.toString(), style: kNumberTextStyle),
-                            Text(
+                            const Text(
                               'cm',
                               style: kLabelTextStyle,
                             ),
@@ -108,8 +108,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             onChanged: (double newValue) {
                               setState(() {
                                 height = newValue.round();
-                                print(height);
-                                waterNeeds();
+                                waterNeeds(context);
                               });
                             },
                           ),
@@ -126,7 +125,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     cardChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'weight',
                           style: kLabelTextStyle,
                         ),
@@ -142,11 +141,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               onPressed: () {
                                 setState(() {
                                   weight++;
-                                  waterNeeds();
+                                  waterNeeds(context);
                                 });
                               },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10.0,
                             ),
                             RoundIconButton(
@@ -154,7 +153,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               onPressed: () {
                                 setState(() {
                                   weight--;
-                                  waterNeeds();
+                                  waterNeeds(context);
                                 });
                               },
                             ),
@@ -169,7 +168,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     cardChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'Age',
                           style: kLabelTextStyle,
                         ),
@@ -185,11 +184,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               onPressed: () {
                                 setState(() {
                                   age++;
-                                  waterNeeds();
+                                  waterNeeds(context);
                                 });
                               },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10.0,
                             ),
                             RoundIconButton(
@@ -197,7 +196,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               onPressed: () {
                                 setState(() {
                                   age > 0 ? age-- : 0;
-                                  waterNeeds();
+                                  waterNeeds(context);
                                 });
                               },
                             ),
@@ -214,7 +213,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                this.resultat + " Litres",
+                                doubleResult.toString() + " Litres",
                                 style: kNumberTextStyle,
                               )
                             ])))
@@ -222,23 +221,26 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             )));
   }
 
-  waterNeeds() {
+  waterNeeds(BuildContext context) {
     var female;
-    if (this.selectedGender == Gender.Female)
+    if (selectedGender == Gender.Female)
       female = 1;
     else
       female = 0;
-    this.resultat = (((this.age <= 3)
-                ? (0.777 * (pow(this.weight, 0.83)))
-                : ((this.age > 3 || this.age <= 13)
-                    ? (0.0746 *
-                        pow(0.95, female) *
-                        (pow((this.height * this.weight), 0.65)))
-                    : (0.0658 *
-                       pow(0.84 ,female)*
-                        (pow((this.height * this.weight), 0.69))))) /
-            10)
-        .toStringAsFixed(2);
+    doubleResult = (((age <= 3)
+            ? (0.777 * (pow(weight, 0.83)))
+            : ((age > 3 || age <= 13)
+                ? (0.0746 * pow(0.95, female) * (pow((height * weight), 0.65)))
+                : (0.0658 *
+                    pow(0.84, female) *
+                    (pow((height * weight), 0.69))))) /
+        10);
+    doubleResult = double.parse(doubleResult.toStringAsFixed(2));
+    setState(() {
+      globals.waterLevelNeeds = doubleResult;
+      globals.percentDrinkedWater = double.parse(
+          (globals.drinkedWater / globals.waterLevelNeeds).toStringAsFixed(2));
+    });
   }
 }
 
@@ -254,11 +256,11 @@ class RoundIconButton extends StatelessWidget {
       child: Icon(icon, color: Colors.lightBlue),
       onPressed: onPressed,
       elevation: 6.0,
-      constraints: BoxConstraints.tightFor(
+      constraints: const BoxConstraints.tightFor(
         width: 50.0,
         height: 50.0,
       ),
-      shape: CircleBorder(),
+      shape: const CircleBorder(),
       fillColor: Colors.white,
     );
   }
