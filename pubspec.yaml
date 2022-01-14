@@ -28,6 +28,7 @@ dependencies:
   percent_indicator: ^3.4.0
   flutter_svg: ^0.18.0
   awesome_dialog: ^2.1.2
+  liquid_progress_indicator: ^0.3.2
 
 dev_dependencies:
   flutter_test:
