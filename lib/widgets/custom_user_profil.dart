@@ -32,7 +32,7 @@ class CustomUserProfil extends StatelessWidget {
       child: Material(
         color: Colors.white,
         child: Ink.image(
-          image: AssetImage('assets/welcome.jpg'),
+          image: AssetImage('assets/images/welcome.jpg'),
           fit: BoxFit.cover,
           width: 128,
           height: 128,

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'widgets/custom_splash_screen.dart';
+import 'config/environment.dart';
 
 
 PageController pageController = PageController(initialPage: 0);
 int currentIndex = 0;
 
 void main() {
-  runApp(
-    MyApp(),
+  const String environment = String.fromEnvironment(
+    'ENVIRONMENT',
+    defaultValue: Environment.DEV,
   );
+
+  Environment().initConfig(environment);
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

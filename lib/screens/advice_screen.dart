@@ -3,6 +3,9 @@ import '../utils/Reusable_card.dart';
 import '../utils/constants.dart';
 
 class AdviceScreen extends StatelessWidget {
+  getAllAdvices(){
+
+  }
   @override
   Widget build(BuildContext context) {
     return ListView(
